@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Stories Blog</title>
+</head>
+<body>
+    <h1>User Stories Blog</h1>
+    <a th:href="@{/addBlog}">Add blog.</a>
+    <p th:if="${listOfBlogs.size()} < 1">There are no blogs on this site :(</p>
+    <div style="background-color: aqua" th:unless="${listOfBlogs.size()} < 1" th:each="blog : ${listOfBlogs}">
+        <h2 th:text="${blog.title}"></h2>
+        <!--<p th:text="${blog.text}"></p>-->
+        <a th:href="@{/blogs/{title}/{id}(title=${blog.title}, id=${blog.id})}">See more..</a>
+    </div>
+
+</body>
+</html>
