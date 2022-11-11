@@ -7,6 +7,15 @@
 <body>
   <h1 th:text="${blog.title}"></h1>
   <p th:text="${blog.text}"></p>
+  <hr>
+  <p th:if="${comment.blog.id == blog.id}" th:each="comment : ${listOfComments}" th:text="${comment.text}"></p>
 
+    <h2>Leave a comment</h2>
+
+    <form action="#" th:action="@{/blogs/saveComment}" th:object="${comment}" method="post">
+        <textarea cols="50" rows="10" th:field="*{text}" placeholder="Enter comment here..."></textarea><br>
+        <input hidden name="blogId" th:value="${blog.id}">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
