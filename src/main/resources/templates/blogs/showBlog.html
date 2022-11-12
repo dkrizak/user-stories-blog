@@ -8,7 +8,10 @@
   <h1 th:text="${blog.title}"></h1>
   <p th:text="${blog.text}"></p>
   <hr>
-  <p th:if="${comment.blog.id == blog.id}" th:each="comment : ${listOfComments}" th:text="${comment.text}"></p>
+  <div th:if="${comment.blog.id == blog.id}" th:each="comment : ${listOfComments}">
+      <p th:text="${comment.text}"></p>
+      <label th:text="${'Posted on: ' + comment.timeOfPosting}"></label>
+  </div>
 
     <h2>Leave a comment</h2>
 

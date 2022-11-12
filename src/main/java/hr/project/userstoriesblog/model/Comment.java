@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "comments")
@@ -39,8 +41,12 @@ public class Comment {
         this.text = text;
     }
 
-    public Instant getTimeOfPosting() {
-        return timeOfPosting;
+    public String getTimeOfPosting() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
+                .withZone(ZoneId.systemDefault());
+
+        return formatter.format(timeOfPosting);
     }
 
     public void setTimeOfPosting(Instant timeOfPosting) {
