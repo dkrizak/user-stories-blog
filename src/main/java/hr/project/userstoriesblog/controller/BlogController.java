@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.Instant;
@@ -66,11 +67,9 @@ public class BlogController {
     }
 
     @PostMapping("/blogs/saveComment")
-    public String saveComment(@ModelAttribute Comment comment,
+    public String saveComment(@Valid @ModelAttribute Comment comment, BindingResult bindingResult,
                               @RequestParam long blogId,
                               Model model){
-
-
 
         Blog blog = blogService.getBlogById(blogId);
 
@@ -80,9 +79,9 @@ public class BlogController {
         comment.setBlog(blog);
         model.addAttribute("comment", comment);
 
-//        if(bindingResult.hasErrors()){
-//            return "/blogs/showBlog";
-//        }
+        if(bindingResult.hasErrors()){
+            return "/blogs/showBlogError";
+        }
 
         Instant time = Instant.now();
         comment.setTimeOfPosting(time);
@@ -91,7 +90,6 @@ public class BlogController {
 
         String url = "redirect:/blogs/" + blog.getTitle().replaceAll(" ", "%20") + "/" + blog.getId();
 
-        //return "redirect:/blogs/showBlog";
         return url;
 
     }

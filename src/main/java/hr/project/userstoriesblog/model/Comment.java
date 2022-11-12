@@ -18,7 +18,6 @@ public class Comment {
     @NotNull
     private String text;
 
-    @NotNull
     @Column(name = "time_of_posting")
     private Instant timeOfPosting;
 

@@ -14,6 +14,7 @@
 
     <form action="#" th:action="@{/blogs/saveComment}" th:object="${comment}" method="post">
         <textarea cols="50" rows="10" th:field="*{text}" placeholder="Enter comment here..."></textarea><br>
+        <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
         <input hidden name="blogId" th:value="${blog.id}">
         <input type="submit" value="Submit">
     </form>
