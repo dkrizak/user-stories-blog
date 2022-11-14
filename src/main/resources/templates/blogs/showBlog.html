@@ -11,6 +11,8 @@
   <div th:if="${comment.blog.id == blog.id}" th:each="comment : ${listOfComments}">
       <p th:text="${comment.text}"></p>
       <label th:text="${'Posted on: ' + comment.timeOfPosting}"></label>
+      <a th:href="@{/blogs/editComment/{id}(id=${comment.id})}">Edit comment</a>
+      <a th:href="@{/blogs/deleteComment/{id}(id=${comment.id})}">Delete comment</a>
   </div>
 
     <h2>Leave a comment</h2>

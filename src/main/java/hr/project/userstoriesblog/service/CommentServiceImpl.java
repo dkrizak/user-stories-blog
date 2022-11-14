@@ -4,6 +4,9 @@ import hr.project.userstoriesblog.model.Blog;
 import hr.project.userstoriesblog.model.Comment;
 import hr.project.userstoriesblog.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,4 +55,11 @@ public class CommentServiceImpl implements CommentService{
             throw  new RuntimeException("Comment with id " + id + " was not found");
         }
     }
+    @Override
+    @Modifying()
+    @Query("UPDATE Comment c SET c.text = :text WHERE c.id = :commentId")
+    public void updateComment(@Param("commentId") long id, @Param("text") String text){
+
+    }
+
 }

@@ -10,4 +10,5 @@ public interface BlogService {
     void saveBlog(Blog blog);
     Blog getBlogById(long id);
     void deleteBlogById(long id);
+    
 }

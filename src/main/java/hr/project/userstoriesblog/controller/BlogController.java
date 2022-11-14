@@ -2,6 +2,7 @@ package hr.project.userstoriesblog.controller;
 
 import hr.project.userstoriesblog.model.Blog;
 import hr.project.userstoriesblog.model.Comment;
+import hr.project.userstoriesblog.repository.CommentRepository;
 import hr.project.userstoriesblog.service.BlogService;
 import hr.project.userstoriesblog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,4 +92,54 @@ public class BlogController {
         return url;
 
     }
+
+    @GetMapping("/blogs/editComment/{id}")
+    public String showCommentForEdit (@PathVariable(value = "id") long id, Model model){
+        Comment comment = commentService.getCommentById(id);
+        model.addAttribute("comment", comment);
+        model.addAttribute("listOfAllComments", commentService.getAllComments());
+        return "blogs/editComment";
+    }
+    @GetMapping("/showCommentForDelete/{id}")
+    public String showCommentForDelete (@PathVariable(value = "id") long id){
+        commentService.deleteCommentById(id);
+        return "redirect:/comments";
+    }
+
+    @PostMapping("/blogs/saveEditedComment")
+    public String saveEditedComment(@Valid @ModelAttribute Comment comment,
+                                    BindingResult bindingResult,
+                                    @RequestParam long blogId,
+                                    Model model) {
+
+        Blog blog = blogService.getBlogById(blogId);
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("comment", comment);
+            model.addAttribute("blog", blog);
+            return "/blogs/showEditError";
+        }
+
+
+
+        Comment updatedComment = commentService.getCommentById(comment.getId());
+        updatedComment.setText(comment.getText());
+
+        commentService.saveComment(updatedComment);
+        String url = "redirect:/blogs/" + blog.getTitle().replaceAll(" ", "%20") + "/" + blog.getId();
+
+        return url;
+    }
+
+    @GetMapping("/blogs/deleteComment/{id}")
+    public String deleteComment (@PathVariable(value = "id") long id, Model model){
+
+        Blog blog = commentService.getCommentById(id).getBlog();
+
+        commentService.deleteCommentById(id);
+
+        String url = "redirect:/blogs/" + blog.getTitle().replaceAll(" ", "%20") + "/" + blog.getId();
+        return url;
+    }
 }
+
