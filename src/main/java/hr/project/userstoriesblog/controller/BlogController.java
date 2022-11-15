@@ -2,23 +2,33 @@ package hr.project.userstoriesblog.controller;
 
 import hr.project.userstoriesblog.model.Blog;
 import hr.project.userstoriesblog.model.Comment;
-import hr.project.userstoriesblog.repository.CommentRepository;
+import hr.project.userstoriesblog.repository.BlogRepository;
 import hr.project.userstoriesblog.service.BlogService;
 import hr.project.userstoriesblog.service.CommentService;
+import hr.project.userstoriesblog.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class BlogController {
 
     private BlogService blogService;
     private CommentService commentService;
+
+    @Autowired
+    private SessionService sessionService;
+
+    @Autowired
+    BlogRepository blogRepository;
     @Autowired
     public BlogController(BlogService blogService, CommentService commentService) {
         this.blogService = blogService;
@@ -26,8 +36,22 @@ public class BlogController {
     }
 
     @GetMapping("/")
-    public String showBlogs(Model model){
-        model.addAttribute("listOfBlogs", blogService.getAllBlogs());
+    public String showBlogs(Model model, HttpSession session){
+
+        String user;
+
+        if (!sessionService.loginCheck(session)) {
+            model.addAttribute("isLoggedIn", false);
+        } else {
+            model.addAttribute("isLoggedIn", true);
+            user = session.getAttribute("user").toString();
+            model.addAttribute("user", user);
+        }
+
+        List<Blog> blogs = blogService.getAllBlogs();
+        Collections.reverse(blogs);
+
+        model.addAttribute("listOfBlogs", blogs);
 
         return "blogs/index";
     }
@@ -119,8 +143,6 @@ public class BlogController {
             model.addAttribute("blog", blog);
             return "/blogs/showEditError";
         }
-
-
 
         Comment updatedComment = commentService.getCommentById(comment.getId());
         updatedComment.setText(comment.getText());

@@ -5,6 +5,17 @@
     <title>User Stories Blog</title>
 </head>
 <body>
+    <div th:if="${isLoggedIn}">
+        <label th:text="${user}"></label>
+        <form th:action="@{/invalidate/session}" method="post"><button type="submit">Logout</button></form>
+    </div>
+
+    <div th:unless="${isLoggedIn}">
+        <label>Guest</label>
+        <form th:action="@{/register}" style="display: inline"><button type="submit">Register</button></form>
+        <form th:action="@{/login}" style="display: inline"><button>Login</button></form>
+    </div>
+
     <h1>User Stories Blog</h1>
     <a th:href="@{/addBlog}">Add blog.</a>
     <p th:if="${listOfBlogs.size()} < 1">There are no blogs on this site :(</p>

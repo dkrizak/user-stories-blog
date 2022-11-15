@@ -55,11 +55,4 @@ public class CommentServiceImpl implements CommentService{
             throw  new RuntimeException("Comment with id " + id + " was not found");
         }
     }
-    @Override
-    @Modifying()
-    @Query("UPDATE Comment c SET c.text = :text WHERE c.id = :commentId")
-    public void updateComment(@Param("commentId") long id, @Param("text") String text){
-
-    }
-
 }

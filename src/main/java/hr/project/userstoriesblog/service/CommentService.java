@@ -15,6 +15,4 @@ public interface CommentService {
     Comment getCommentById(long id);
     void deleteCommentById(long id);
 
-    public void updateComment(@Param("commentId") long id, @Param("text") String text);
-
 }

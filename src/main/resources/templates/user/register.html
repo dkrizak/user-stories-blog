@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>User Stories Blog</title>
+</head>
+<body>
+    <h1>Register User</h1>
+    <form action="#" th:action="@{/saveuser}" th:object="${user}" method="post">
+        <input type="text" th:field="*{firstName}" placeholder="Enter First Name..."><br>
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+        <input type="text" th:field="*{lastName}" placeholder="Enter Last Name..."><br>
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+        <input type="text" th:field="*{email}" placeholder="Enter Email..."><br>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <input type="text" th:field="*{username}" placeholder="Enter Username..."><br>
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        <input type="password" th:field="*{password}" placeholder="Enter Password..."><br>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        <input type="submit" value="Register">
+    </form>
+
+</body>
+</html>
