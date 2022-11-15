@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+  <title>User Stories Blog</title>
+</head>
+<body>
+
+  <div>
+    <label th:text="${user}"></label>
+    <form th:action="@{/editRoles}" method="post"><button type="submit" style="display: inline">Edit Roles</button></form>
+    <form th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+  </div>
+
+  <h1>Update Role</h1>
+
+  <form action="#" th:action="@{/user/saveRole}" th:object="${updateUser}" method="post">
+    <input type="text" th:field="*{firstName}" disabled>
+
+    <input type="text" th:field="*{lastName}" disabled>
+
+    <input type="text" th:field="*{email}" disabled>
+
+    <input type="text" th:field="*{username}" disabled>
+
+    <select th:field="*{role}">
+      <option value="ADMIN">ADMIN</option>
+      <option value="USER">USER</option>
+      <option value="MODERATOR">MODERATOR</option>
+    </select>
+
+    <!-- Add hidden form field to handle update -->
+    <input type="hidden" th:field="*{id}">
+
+    <button type="submit">Save User</button>
+  </form>
+</body>
+</html>

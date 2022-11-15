@@ -2,7 +2,6 @@ package hr.project.userstoriesblog.controller;
 
 import hr.project.userstoriesblog.model.Blog;
 import hr.project.userstoriesblog.model.Comment;
-import hr.project.userstoriesblog.repository.BlogRepository;
 import hr.project.userstoriesblog.service.BlogService;
 import hr.project.userstoriesblog.service.CommentService;
 import hr.project.userstoriesblog.service.SessionService;
@@ -53,6 +52,7 @@ public class BlogController {
         Collections.reverse(blogs);
 
         model.addAttribute("listOfBlogs", blogs);
+        model.addAttribute("role", session.getAttribute("role"));
 
         return "blogs/index";
     }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>User Stories Blog</title>
+</head>
+<body>
+    <div>
+        <label th:text="${user}"></label>
+        <form th:action="@{/editRoles}" method="post"><button type="submit" style="display: inline">Edit Roles</button></form>
+        <form th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+    </div>
+
+    <h1>Edit Roles</h1>
+    <table th:if="${users.size() > 0}">
+        <thead>
+        <th>User First Name</th>
+        <th>User Last Name</th>
+        <th>User Email</th>
+        <th>Username</th>
+        <th>User Role</th>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.role}"></td>
+            <td>
+                <a th:href="@{/user/showUpdateForm/{id}(id=${user.id})}">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

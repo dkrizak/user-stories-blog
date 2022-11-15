@@ -22,7 +22,7 @@ public class Blog {
     private String title;
 
     @NotEmpty(message = "Blog text can't be empty.")
-    @Column(name = "blog_text")
+    @Column(name = "blog_text", columnDefinition = "TEXT")
     @NotNull
     private String text;
 
