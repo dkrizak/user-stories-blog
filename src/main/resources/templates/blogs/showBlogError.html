@@ -5,17 +5,30 @@
   <title>User Stories Blog</title>
 </head>
 <body>
+<div th:if="${isLoggedIn}">
+  <label th:text="${user}"></label>
+  <form th:action="@{/invalidate/session}" method="post"><button type="submit">Logout</button></form>
+</div>
+
+<div th:unless="${isLoggedIn}">
+  <label>Guest</label>
+  <form th:action="@{/register}" style="display: inline"><button type="submit">Register</button></form>
+  <form th:action="@{/login}" style="display: inline"><button>Login</button></form>
+</div>
+
 <h1 th:text="${blog.title}"></h1>
 <p th:text="${blog.text}"></p>
 <hr>
 <div th:if="${comment.blog.id == blog.id}" th:each="comment : ${listOfComments}">
   <p th:text="${comment.text}"></p>
-  <label th:text="${'Posted on: ' + comment.timeOfPosting}"></label>
+  <label th:text="${'Posted on: ' + comment.timeOfPosting + ' by ' + comment.user.username}"></label>
+  <a th:if="${comment.id == userId || role == 'ADMIN' || role == 'MODERATOR'}" th:href="@{/blogs/editComment/{id}(id=${comment.id})}">Edit comment</a>
+  <a th:if="${comment.id == userId || role == 'ADMIN' || role == 'MODERATOR'}" th:href="@{/blogs/deleteComment/{id}(id=${comment.id})}">Delete comment</a>
 </div>
 
 <h2>Leave a comment</h2>
-
-<form action="#" th:action="@{/blogs/saveComment}" th:object="${comment}" method="post">
+<p th:unless="${isLoggedIn}">Login to leave a comment.</p>
+<form th:if="${isLoggedIn}" action="#" th:action="@{/blogs/saveComment}" th:object="${comment}" method="post">
   <textarea cols="50" rows="10" th:field="*{text}" placeholder="Enter comment here..."></textarea><br>
   <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
   <input hidden name="blogId" th:value="${blog.id}">

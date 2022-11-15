@@ -23,9 +23,16 @@ public class Comment {
     @Column(name = "time_of_posting")
     private Instant timeOfPosting;
 
+    @Column(name = "time_of_last_update")
+    private Instant timeOfUpdate;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "Blog_id", nullable = false)
     private Blog blog;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Comment(){}
 
@@ -53,10 +60,6 @@ public class Comment {
         return formatter.format(timeOfPosting);
     }
 
-    public Instant getOriginalTime() {
-        return timeOfPosting;
-    }
-
     public void setTimeOfPosting(Instant timeOfPosting) {
         this.timeOfPosting = timeOfPosting;
     }
@@ -67,5 +70,24 @@ public class Comment {
 
     public void setBlog(Blog blog) {
         this.blog = blog;
+    }
+
+    public String getTimeOfUpdate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
+                .withZone(ZoneId.systemDefault());
+
+        return formatter.format(timeOfUpdate);
+    }
+
+    public void setTimeOfUpdate(Instant timeOfUpdate) {
+        this.timeOfUpdate = timeOfUpdate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

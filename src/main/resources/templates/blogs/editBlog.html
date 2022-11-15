@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>User Stories Blog</title>
+</head>
+<body>
+  <h1>Edit Blog</h1>
+  <form action="#" th:action="@{/saveEditedBlog}" th:object="${blog}" method="post">
+    <input type="text" th:field="*{title}"><br>
+    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+    <textarea rows="10" cols="50" th:field="*{summary}"></textarea><br>
+    <p th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></p>
+    <textarea rows="10" cols="50" th:field="*{text}"></textarea><br>
+    <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+    <input th:field="*{id}" hidden>
+    <input type="submit" value="Submit">
+  </form>
+
+</body>
+</html>

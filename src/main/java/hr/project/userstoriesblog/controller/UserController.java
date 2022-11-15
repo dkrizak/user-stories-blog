@@ -1,8 +1,6 @@
 package hr.project.userstoriesblog.controller;
 
-import hr.project.userstoriesblog.model.Blog;
 import hr.project.userstoriesblog.model.User;
-import hr.project.userstoriesblog.repository.UserRepository;
 import hr.project.userstoriesblog.service.SessionService;
 import hr.project.userstoriesblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -31,7 +27,11 @@ public class UserController {
     SessionService sessionService;
 
     @GetMapping("/register")
-    public String registerUser(Model model){
+    public String registerUser(Model model, HttpSession session){
+
+        if (sessionService.loginCheck(session)) {
+            return "redirect:/";
+        }
 
         model.addAttribute("user", new User());
 
@@ -81,7 +81,6 @@ public class UserController {
         }
 
         if (new BCryptPasswordEncoder().matches(password, user.getPassword())) {
-            //model.addAttribute(user);
             request.getSession().setAttribute("user", user.getUsername());
             request.getSession().setAttribute("role", user.getRole());
             request.getSession().setAttribute("id", user.getId());

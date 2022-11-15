@@ -9,6 +9,8 @@
   <form action="#" th:action="@{/saveBlog}" th:object="${blog}" method="post">
     <input type="text" th:field="*{title}" placeholder="Enter Title..."><br>
     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+      <textarea rows="10" cols="50" th:field="*{summary}" placeholder="Enter Summary..."></textarea><br>
+      <p th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></p>
     <textarea rows="10" cols="50" th:field="*{text}" placeholder="Enter Blog text..."></textarea><br>
       <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
     <input type="submit" value="Submit">

@@ -24,27 +24,6 @@ public class SessionController {
         return "redirect:/";
     }
 
-    @PostMapping("/addNote")
-    public String addNote(@RequestParam("note") String note, HttpServletRequest request) {
-        //get the notes from request session
-        List<String> notes = (List<String>) request.getSession().getAttribute("NOTES_SESSION");
-        //check if notes is present in session or not
-        if (notes == null) {
-            notes = new ArrayList<>();
-            // if notes object is not present in session, set notes in the request session
-            request.getSession().setAttribute("NOTES_SESSION", notes);
-            request.getSession().setAttribute("user", "John");
-        }
-        notes.add(note);
-        request.getSession().setAttribute("NOTES_SESSION", notes);
-        return "redirect:/home";
-    }
-    @GetMapping("/home")
-    public String home(Model model, HttpSession session) {
-        List<String> notes = (List<String>) session.getAttribute("NOTES_SESSION");
-        model.addAttribute("notesSession", notes!=null? notes:new ArrayList<>());
-        return "blogs/home";
-    }
     @PostMapping("/invalidate/session")
     public String destroySession(HttpServletRequest request) throws ServletException {
         //invalidate the session , this will clear the data from configured database (Mysql/redis/hazelcast)
