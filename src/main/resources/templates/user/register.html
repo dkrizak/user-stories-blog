@@ -15,6 +15,7 @@
         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         <input type="text" th:field="*{username}" placeholder="Enter Username..."><br>
         <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        <p th:if="${exists}">User with that username already exists.</p>
         <input type="password" th:field="*{password}" placeholder="Enter Password..."><br>
         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
         <input type="submit" value="Register">

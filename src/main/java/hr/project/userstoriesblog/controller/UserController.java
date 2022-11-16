@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Controller
@@ -38,9 +40,16 @@ public class UserController {
     }
 
     @PostMapping("/saveuser")
-    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult){
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
+            return "/user/register";
+        }
+
+        User existingUser = userService.getUserByUserName(user.getUsername());
+
+        if (existingUser != null) {
+            model.addAttribute("exists", true);
             return "/user/register";
         }
 
@@ -95,8 +104,16 @@ public class UserController {
 
     }
 
-    @PostMapping("/users")
+    @GetMapping("/users")
     public String editRoles(Model model, HttpSession session) {
+
+        if (!sessionService.loginCheck(session)) {
+            return "redirect:/";
+        } else {
+            if (!session.getAttribute("role").equals("ADMIN")) {
+                return "redirect:/";
+            }
+        }
 
         List<User> users = userService.getAllUsers();
 
@@ -139,7 +156,7 @@ public class UserController {
             session.setAttribute("role", user.getRole());
         }
 
-        String url = "redirect:/user/showUpdateForm/" + user.getId();
+        String url = "redirect:/users";
 
         return url;
     }
