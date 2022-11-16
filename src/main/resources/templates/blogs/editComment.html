@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>User Stories Blog</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<div class="wrapper">
+    <div class="navbar">
+        <a th:href="@{/}"><img class="logo" src="/logowhite.png"></a>
+        <div class="options">
+            <label class="loggedUser" th:text="${user}"></label>
+            <form class="navform" th:if="${role == 'ADMIN'}" th:action="@{/users}"><button type="submit" style="display: inline">Edit Users</button></form>
+            <form  class="navform" th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+        </div>
+    </div>
     <h1 th:text="${comment.blog.title}"></h1>
     <p th:text="${comment.blog.text}"></p>
-    <form action="#" th:action="@{/blogs/saveEditedComment}" th:object="${comment}" method="post">
-        <textarea cols="50" rows="10" th:field="*{text}"></textarea>
-        <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+    <form class="newBlogForm" action="#" th:action="@{/blogs/saveEditedComment}" th:object="${comment}" method="post">
+        <textarea class="inputText" cols="50" rows="10" th:field="*{text}"></textarea>
+        <p class="inputError" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
         <input type="hidden" th:field="*{id}">
-        <input hidden name="blogId" th:value="${comment.blog.id}">
+        <input hidden name="blogId" th:value="${comment.blog.id}"><br>
         <button type="submit">Save Comment</button>
     </form>
-    <hr>
-    <a th:href="@{/}">Back to Blogs</a>
+</div>
 </body>
 </html>

@@ -1,0 +1,131 @@
+.wrapper{
+    width: 80%;
+    margin: auto;
+}
+
+.navbar{
+    /*display: flex;
+    align-content: space-between;*/
+    margin: 0 auto;
+}
+
+.loggedUser{
+    /*margin-left: 70%;*/
+    margin-top: 30px;
+    font-family: "Agency FB";
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.options{
+    float: right;
+    margin-top: 20px;
+}
+
+h1 {
+    font-family: "Agency FB";
+    text-align: center;
+}
+
+h2{
+    font-family: "Agency FB";
+}
+
+.logo{
+    width: 150px;
+}
+
+.navform{
+    margin-left: 10px;
+    display: inline;
+    margin-top: 30px;
+}
+
+.newBlog{
+    font-family: "Agency FB";
+    /*background-color: #b6bab7;
+    text-decoration: none;*/
+    font-size: 30px;
+    color: inherit;
+}
+.newBlog:visited{
+    color: inherit;
+}
+
+.newBlog:hover{
+    color: #b6bab7;
+}
+
+.blog{
+    background-color: #d2d6d3;
+    display: block;
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.blog2{
+    display: block;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.buttonContainer{
+    display: block;
+    padding-left: 50px;
+}
+
+.blogTitle{
+    /*margin-left: 20px;
+    margin-top: 20px;*/
+    font-family: "Agency FB";
+}
+
+.blogSummary{
+    margin: 20px;
+    font-family: "Arial Rounded MT Bold";
+}
+
+.blogPublish{
+    margin: 20px;
+    font-family: "Agency FB";
+}
+
+.blogPublish2{
+    margin:0px;
+    font-family: "Agency FB";
+    float: right;
+}
+
+.blogMore{
+    margin: 0;
+    float: right;
+    padding-right: 20px;
+    font-family: "Agency FB";
+    font-size: 20px;
+    color: inherit;
+}
+.blogMore:visited{
+    color: inherit;
+}
+
+.newBlogForm{
+    text-align: center;
+}
+
+.inputText{
+    margin: 10px;
+}
+
+.inputError{
+    color: red;
+}
+
+.userTable{
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.userTable td, th{
+    padding: 10px;
+}

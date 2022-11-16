@@ -3,26 +3,32 @@
 <head>
   <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
   <title>User Stories Blog</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-  <div>
-    <label th:text="${user}"></label>
-    <form th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+<div class="wrapper">
+  <div class="navbar">
+    <a th:href="@{/}"><img class="logo" src="/logowhite.png"></a>
+    <div class="options">
+      <label class="loggedUser" th:text="${user}"></label>
+      <!--<form class="navform" th:if="${role == 'ADMIN'}" th:action="@{/users}"><button type="submit" style="display: inline">Edit Users</button></form>-->
+      <form  class="navform" th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+    </div>
   </div>
 
   <h1>Update Role</h1>
 
-  <form action="#" th:action="@{/user/saveRole}" th:object="${updateUser}" method="post">
-    <input type="text" th:field="*{firstName}" disabled>
+  <form class="newBlogForm" action="#" th:action="@{/user/saveRole}" th:object="${updateUser}" method="post">
+    <input class="inputText" type="text" th:field="*{firstName}" disabled>
 
-    <input type="text" th:field="*{lastName}" disabled>
+    <input class="inputText" type="text" th:field="*{lastName}" disabled>
 
-    <input type="text" th:field="*{email}" disabled>
+    <input class="inputText" type="text" th:field="*{email}" disabled>
 
-    <input type="text" th:field="*{username}" disabled>
+    <input class="inputText" type="text" th:field="*{username}" disabled>
 
-    <select th:field="*{role}">
+    <select class="inputText" th:field="*{role}">
       <option value="ADMIN">ADMIN</option>
       <option value="USER">USER</option>
       <option value="MODERATOR">MODERATOR</option>
@@ -33,5 +39,6 @@
 
     <button type="submit">Save User</button>
   </form>
+</div>
 </body>
 </html>

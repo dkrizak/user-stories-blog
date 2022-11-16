@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>User Stories Blog</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Add Blog.</h1>
-  <form action="#" th:action="@{/saveBlog}" th:object="${blog}" method="post">
-    <input type="text" th:field="*{title}" placeholder="Enter Title..."><br>
-    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
-      <textarea rows="10" cols="50" th:field="*{summary}" placeholder="Enter Summary..."></textarea><br>
-      <p th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></p>
-    <textarea rows="10" cols="50" th:field="*{text}" placeholder="Enter Blog text..."></textarea><br>
-      <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+<div class="wrapper">
+  <div class="navbar">
+    <a th:href="@{/}"><img class="logo" src="logowhite.png"></a>
+    <div class="options">
+      <label class="loggedUser" th:text="${user}"></label>
+      <form class="navform" th:if="${role == 'ADMIN'}" th:action="@{/users}"><button type="submit" style="display: inline">Edit Users</button></form>
+      <form  class="navform" th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+    </div>
+  </div>
+
+  <h1>Write New Blog</h1>
+  <form class="newBlogForm" action="#" th:action="@{/saveBlog}" th:object="${blog}" method="post">
+    <input class="inputText" type="text" th:field="*{title}" placeholder="Enter Title..."><br>
+    <p class="inputError" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+      <textarea class="inputText" rows="10" cols="50" th:field="*{summary}" placeholder="Enter Summary..."></textarea><br>
+      <p class="inputError" th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></p>
+    <textarea class="inputText" rows="10" cols="50" th:field="*{text}" placeholder="Enter Blog text..."></textarea><br>
+      <p class="inputError" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
     <input type="submit" value="Submit">
     </form>
-
+</div>
 </body>
 </html>

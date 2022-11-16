@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>User Stories Blog</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div th:if="${isLoggedIn}">
-        <label th:text="${user}"></label>
-        <form th:if="${role == 'ADMIN'}" th:action="@{/users}"><button type="submit" style="display: inline">Edit Users</button></form>
-        <form th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
-    </div>
+    <div class="wrapper">
+        <div class="navbar" th:if="${isLoggedIn}">
+            <a th:href="@{/}"><img class="logo" src="logowhite.png"></a>
+            <div class="options">
+                <label class="loggedUser" th:text="${user}"></label>
+                <form class="navform" th:if="${role == 'ADMIN'}" th:action="@{/users}"><button type="submit" style="display: inline">Edit Users</button></form>
+                <form  class="navform" th:action="@{/invalidate/session}" method="post"><button type="submit" style="display: inline">Logout</button></form>
+            </div>
+        </div>
 
-    <div th:unless="${isLoggedIn}">
-        <label>Guest</label>
-        <form th:action="@{/register}" style="display: inline"><button type="submit">Register</button></form>
-        <form th:action="@{/login}" style="display: inline"><button>Login</button></form>
-    </div>
+        <div class="navbar" th:unless="${isLoggedIn}">
+            <a th:href="@{/}"><img class="logo" src="logowhite.png"></a>
+            <div class="options">
+                <label class="loggedUser">Guest</label>
+                <form class="navform" th:action="@{/register}" style="display: inline"><button type="submit">Register</button></form>
+                <form class="navform" th:action="@{/login}" style="display: inline"><button>Login</button></form>
+            </div>
+        </div>
 
-    <h1>User Stories Blog</h1>
-    <a th:if="${isLoggedIn && role == 'ADMIN'}" th:href="@{/addBlog}">Add blog.</a>
-    <p th:if="${listOfBlogs.size()} < 1">There are no blogs on this site :(</p>
-    <div style="background-color: aqua" th:unless="${listOfBlogs.size()} < 1" th:each="blog : ${listOfBlogs}">
-        <h2 th:text="${blog.title}"></h2>
-        <p th:text="${blog.summary}"></p>
-        <p th:text="${'Published on ' + blog.timeOfPosting}"></p>
-        <a th:href="@{/blogs/{title}/{id}(title=${blog.title}, id=${blog.id})}">See more..</a>
+        <h1>User Stories Blog</h1>
+        <a class="newBlog" th:if="${isLoggedIn && role == 'ADMIN'}" th:href="@{/addBlog}">Write New Blog</a>
+        <p th:if="${listOfBlogs.size()} < 1">There are no blogs on this site :(</p>
+        <div class="blog" th:unless="${listOfBlogs.size()} < 1" th:each="blog : ${listOfBlogs}">
+            <h2 class="blogTitle" th:text="${blog.title}"></h2>
+            <p class="blogSummary" th:text="${blog.summary}"></p>
+            <p class="blogPublish" th:text="${'Published on ' + blog.timeOfPosting}"></p>
+            <a class="blogMore" th:href="@{/blogs/{title}/{id}(title=${blog.title}, id=${blog.id})}">See more..</a>
+        </div>
     </div>
-
 </body>
 </html>

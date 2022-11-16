@@ -7,6 +7,7 @@ import hr.project.userstoriesblog.service.CommentService;
 import hr.project.userstoriesblog.service.SessionService;
 import hr.project.userstoriesblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -69,6 +70,8 @@ public class BlogController {
         }
 
         model.addAttribute("blog", new Blog());
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
 
         return "blogs/addBlog";
     }
@@ -93,21 +96,27 @@ public class BlogController {
     }
 
     @PostMapping("/blogs/editBlog")
-    public String editBlog(@RequestParam long blogId, Model model){
+    public String editBlog(@RequestParam long blogId, Model model, HttpSession session){
 
         Blog blog = blogService.getBlogById(blogId);
 
         model.addAttribute("blog", blog);
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
 
         return "/blogs/editBlog";
     }
 
     @PostMapping("/saveEditedBlog")
     public String saveEditedBlog(@Valid @ModelAttribute Blog blog,
-                           BindingResult bindingResult
+                           BindingResult bindingResult,
+                                 HttpSession session,
+                                 Model model
     ){
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("user", session.getAttribute("user"));
+            model.addAttribute("role", session.getAttribute("role"));
             return "/blogs/editBlog";
         }
 
@@ -215,6 +224,8 @@ public class BlogController {
         Comment comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
         model.addAttribute("listOfAllComments", commentService.getAllComments());
+        model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "blogs/editComment";
     }
 
@@ -222,13 +233,16 @@ public class BlogController {
     public String saveEditedComment(@Valid @ModelAttribute Comment comment,
                                     BindingResult bindingResult,
                                     @RequestParam long blogId,
-                                    Model model) {
+                                    Model model,
+                                    HttpSession session) {
 
         Blog blog = blogService.getBlogById(blogId);
 
         if(bindingResult.hasErrors()){
             model.addAttribute("comment", comment);
             model.addAttribute("blog", blog);
+            model.addAttribute("user", session.getAttribute("user"));
+            model.addAttribute("role", session.getAttribute("role"));
             return "/blogs/showEditError";
         }
 

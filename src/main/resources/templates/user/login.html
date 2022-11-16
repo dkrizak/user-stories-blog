@@ -3,16 +3,26 @@
 <head>
   <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
   <title>User Stories Blog</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Login</h1>
-<form action="#" th:action="@{/login}" method="post">
+<div class="wrapper">
+  <div class="navbar" th:unless="${isLoggedIn}">
+    <a th:href="@{/}"><img class="logo" src="logowhite.png"></a>
+    <div class="options">
+      <label class="loggedUser">Guest</label>
+      <form class="navform" th:action="@{/register}" style="display: inline"><button type="submit">Register</button></form>
+      <form class="navform" th:action="@{/login}" style="display: inline"><button>Login</button></form>
+    </div>
+  </div>
+  <h1>Login</h1>
+<form class="newBlogForm" action="#" th:action="@{/login}" method="post">
 
-  <input type="text" name="username" placeholder="Enter Username..."><br>
-  <input type="password" name="password" placeholder="Enter Password..."><br>
-  <p th:if="${error}">Wrong username or password.</p>
+  <input class="inputText" type="text" name="username" placeholder="Enter Username..."><br>
+  <input class="inputText" type="password" name="password" placeholder="Enter Password..."><br>
+  <p class="inputError" th:if="${error}">Wrong username or password.</p>
   <input type="submit" value="Login">
 </form>
-
+</div>
 </body>
 </html>
